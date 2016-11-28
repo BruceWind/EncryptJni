@@ -65,14 +65,26 @@ JNIEXPORT jstring JNICALL Java_com_androidyuan_Encrypt_MD5
 
 
 JNIEXPORT jstring JNICALL
-Java_com_androidyuan_Encrypt_base64encode(JNIEnv *env, jclass type,
-                                          jstring olds,
-                                          jint maxCharPreLine)
+Java_com_androidyuan_Encrypt_base64Encode(JNIEnv *env, jclass type,
+                                          jstring olds)
 {
     const char *old_str = (*env)->GetStringUTFChars(env, olds, 0);
-    // TODO
 
     (*env)->ReleaseStringUTFChars(env, olds, old_str);
 
     return (*env)->NewStringUTF(env, b64_encode(old_str,strlen(old_str)));
+}
+
+
+
+
+JNIEXPORT jstring JNICALL
+Java_com_androidyuan_Encrypt_base64Decode(JNIEnv *env, jclass type,
+                                          jstring str_
+) {
+    const char *str = (*env)->GetStringUTFChars(env, str_, 0);
+
+    (*env)->ReleaseStringUTFChars(env, str_, str);
+
+    return (*env)->NewStringUTF(env, b64_decode(str,strlen(str)));
 }

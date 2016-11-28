@@ -36,18 +36,11 @@ public class Encrypt {
             return "";
         }
     }
-    //begin
-    public static String Base64encode(String string)
-    {
-        return  base64encode(string);
-    }
-
-    //end
 
 
+    public static native String base64Encode(String str);
 
-
-    public static native String base64encode(String str);
+    public static native String base64Decode(String str);
 
 
     public static String javaBase64Encode(String str)

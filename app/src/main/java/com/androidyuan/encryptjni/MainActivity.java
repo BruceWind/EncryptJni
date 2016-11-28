@@ -15,9 +15,9 @@ public class MainActivity extends AppCompatActivity {
 //        toast(Encrypt.getMD5("123"));
 
         toast(
-                "native: "+Encrypt.Base64encode("你大爷")
+                "native: "+Encrypt.base64Decode("bW9ua2V5cyBhbmQgZG9ncw==")
                 +" \n java:"+
-                Encrypt.javaBase64Encode("你大爷")
+                Encrypt.javaBase64Decode("bW9ua2V5cyBhbmQgZG9ncw==")
         );
     }
 
