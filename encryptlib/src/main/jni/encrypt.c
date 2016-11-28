@@ -3,7 +3,6 @@
 #include<string.h>
 #include <android/log.h>
 #include "md5.h"
-#include "../../../../../../android-ndk-r10e/platforms/android-21/arch-arm/usr/include/jni.h"
 #include "b64.h"
 
 #define LOG_TAG "MD5"
@@ -12,7 +11,7 @@
 
 
 // 把java的字符串转换成c的字符串,使用反射
-char* Jstring2CStr(JNIEnv* env, jstring jstr) {
+char *Jstring2CStr(JNIEnv *env, jstring jstr) {
     char *rtn = NULL;
     // 1:先找到字节码文件
     jclass clsstring = (*env)->FindClass(env, "java/lang/String");
@@ -36,26 +35,24 @@ char* Jstring2CStr(JNIEnv* env, jstring jstr) {
 }
 
 
-JNIEXPORT jstring JNICALL Java_com_androidyuan_Encrypt_MD5
-        (JNIEnv *env,
-         jobject instance,
-         jstring jInfo
-        )
-{
+JNIEXPORT jstring JNICALL Java_com_androidyuan_Encrypt_MD5(
+        JNIEnv *env,
+        jobject instance,
+        jstring jInfo
+) {
 
 //    char* cstr = Jstring2CStr(env, jInfo);
     const char *cstr = (*env)->GetStringUTFChars(env, jInfo, 0);
-//	char* cstr = (char*)(*env)->GetStringUTFChars(env, jInfo, 0);
 
-    MD5_CTX context = { 0 };
+    MD5_CTX context = {0};
     MD5Init(&context);
     MD5Update(&context, cstr, strlen(cstr));
-    unsigned char dest[16] = { 0 };
+    unsigned char dest[16] = {0};
     MD5Final(dest, &context);
     (*env)->ReleaseStringUTFChars(env, jInfo, cstr);
 
     int i;
-    char destination[32] = { 0 };
+    char destination[32] = {0};
     for (i = 0; i < 16; i++) {
         sprintf(destination, "%s%02x", destination, dest[i]);
     }
@@ -64,27 +61,27 @@ JNIEXPORT jstring JNICALL Java_com_androidyuan_Encrypt_MD5
 }
 
 
-JNIEXPORT jstring JNICALL
-Java_com_androidyuan_Encrypt_base64Encode(JNIEnv *env, jclass type,
-                                          jstring olds)
-{
+JNIEXPORT jstring JNICALL Java_com_androidyuan_Encrypt_base64Encode(
+        JNIEnv *env,
+        jclass type,
+        jstring olds) {
+
     const char *old_str = (*env)->GetStringUTFChars(env, olds, 0);
 
     (*env)->ReleaseStringUTFChars(env, olds, old_str);
 
-    return (*env)->NewStringUTF(env, b64_encode(old_str,strlen(old_str)));
+    return (*env)->NewStringUTF(env, b64_encode(old_str, strlen(old_str)));
 }
 
 
-
-
-JNIEXPORT jstring JNICALL
-Java_com_androidyuan_Encrypt_base64Decode(JNIEnv *env, jclass type,
-                                          jstring str_
+JNIEXPORT jstring JNICALL Java_com_androidyuan_Encrypt_base64Decode(
+        JNIEnv *env,
+        jclass type,
+        jstring str_
 ) {
     const char *str = (*env)->GetStringUTFChars(env, str_, 0);
 
     (*env)->ReleaseStringUTFChars(env, str_, str);
 
-    return (*env)->NewStringUTF(env, b64_decode(str,strlen(str)));
+    return (*env)->NewStringUTF(env, b64_decode(str, strlen(str)));
 }
