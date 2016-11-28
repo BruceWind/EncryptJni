@@ -12,13 +12,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toast(Encrypt.MD5("123"));
+//        toast(Encrypt.getMD5("123"));
+
+        toast(
+                "native: "+Encrypt.Base64encode("你大爷")
+                +" \n java:"+
+                Encrypt.javaBase64Encode("你大爷")
+        );
     }
 
 
     private void toast(String str)
     {
-
         Toast.makeText(this,str+"",Toast.LENGTH_LONG).show();
     }
 }

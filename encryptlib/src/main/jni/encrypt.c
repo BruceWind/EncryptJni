@@ -4,6 +4,7 @@
 #include <android/log.h>
 #include "md5.h"
 #include "../../../../../../android-ndk-r10e/platforms/android-21/arch-arm/usr/include/jni.h"
+#include "b64.h"
 
 #define LOG_TAG "MD5"
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
@@ -42,7 +43,8 @@ JNIEXPORT jstring JNICALL Java_com_androidyuan_Encrypt_MD5
         )
 {
 
-    char* cstr = Jstring2CStr(env, jInfo);
+//    char* cstr = Jstring2CStr(env, jInfo);
+    const char *cstr = (*env)->GetStringUTFChars(env, jInfo, 0);
 //	char* cstr = (char*)(*env)->GetStringUTFChars(env, jInfo, 0);
 
     MD5_CTX context = { 0 };
@@ -59,4 +61,18 @@ JNIEXPORT jstring JNICALL Java_com_androidyuan_Encrypt_MD5
     }
     LOGI("%s", destination);
     return (*env)->NewStringUTF(env, destination);
+}
+
+
+JNIEXPORT jstring JNICALL
+Java_com_androidyuan_Encrypt_base64encode(JNIEnv *env, jclass type,
+                                          jstring olds,
+                                          jint maxCharPreLine)
+{
+    const char *old_str = (*env)->GetStringUTFChars(env, olds, 0);
+    // TODO
+
+    (*env)->ReleaseStringUTFChars(env, olds, old_str);
+
+    return (*env)->NewStringUTF(env, b64_encode(old_str,strlen(old_str)));
 }
