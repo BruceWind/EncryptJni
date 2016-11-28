@@ -1,32 +1,30 @@
 apply plugin: 'com.android.model.library'
-model{
-android {
-    compileSdkVersion 25
-    buildToolsVersion "24.0.1"
+model {
+    android {
+        compileSdkVersion 25
+        buildToolsVersion "24.0.1"
 
-    defaultConfig {
-        minSdkVersion.apiLevel = 15
-        targetSdkVersion.apiLevel = 25
-        versionCode 1
-        versionName "1.0"
+        defaultConfig {
+            minSdkVersion.apiLevel = 15
+            targetSdkVersion.apiLevel = 25
+            versionCode 1
+            versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+            testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        }
+
+        ndk {
+            moduleName = "JNIEncrypt"
+            toolchain = 'clang'
+            CFlags.add('-std=c99')
+            // 添加依赖库
+            ldLibs.addAll(['android', 'OpenSLES', 'log'])
+            // 生成不同abi体系的so库
+            abiFilters.addAll(['armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'])
+        }
 
     }
-
-    ndk {
-        moduleName ="JNIEncrypt"
-        toolchain = 'clang'
-        CFlags.add('-std=c99')
-        // 添加依赖库
-        ldLibs.addAll(['android','OpenSLES', 'log'])
-        // 生成不同abi体系的so库
-        abiFilters.addAll(['armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'])
-    }
-
-
-
-}
 }
 
 dependencies {
