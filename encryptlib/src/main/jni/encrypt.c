@@ -3,7 +3,7 @@
 #include<string.h>
 #include <android/log.h>
 #include "md5.h"
-#include "b64.h"
+#include "base64.h"
 
 #define LOG_TAG "MD5"
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
