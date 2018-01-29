@@ -7,6 +7,8 @@
 //
 
 
+#include <stdint.h>
+
 /* POINTER defines a generic pointer type */
 typedef unsigned char *POINTER;
 
@@ -14,7 +16,9 @@ typedef unsigned char *POINTER;
 typedef unsigned short int UINT2;
 
 /* UINT4 defines a four byte word */
-typedef unsigned long int UINT4;
+//===============================bugfix：arm64下跟java 下的md5接过不同的问题===============
+//typedef unsigned long int UINT4;// 这个已经废弃 否则导致 armv864下出现跟java下MD5不同的问题
+typedef uint32_t UINT4;
 
 /* PROTO_LIST is defined depending on how PROTOTYPES is defined above.
 If using PROTOTYPES, then PROTO_LIST returns the list, otherwise it
